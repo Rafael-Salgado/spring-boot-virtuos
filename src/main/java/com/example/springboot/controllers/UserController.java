@@ -1,17 +1,19 @@
 package com.example.springboot.controllers;
 
 import com.example.springboot.models.Users;
+import com.example.springboot.services.IUserService;
 import com.example.springboot.services.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @RestController
 public class UserController {
 
     @Autowired
-    private UserRepository userRepository;
+    IUserService services;
 
    /* public UserController(@Autowired IUserService services) {
         this.services = services;
@@ -22,37 +24,39 @@ public class UserController {
     }*/
 
     @GetMapping("/user/{id}")
-    public Users getUser(@PathVariable("id")int id) {
-        Optional<Users> user = userRepository.findById(id);
-        return user.get();
+    public Users getUser(@PathVariable("id") long id) {
+        return services.getUserById(id);
     }
 
     @GetMapping("/users")
-    public @ResponseBody Iterable<Users> getAllUsers() {
+    public @ResponseBody
+    Iterable<Users> getAllUsers() {
         // This returns a JSON or XML with the users
-        return userRepository.findAll();
+        return services.getAllUsers();
+    }
+
+    @GetMapping("/login")
+    public @ResponseBody
+    String getUserByEmailAndPassw(@RequestParam String email, String password,long id){
+       return services.loginUser(email,password,id);
     }
 
     @PostMapping
-    public @ResponseBody String createUser(@RequestBody Users users) {
-        userRepository.save(users);
-        return "Saved";
-    }
-
-   /* @GetMapping("/login")
-    public User getUserByEmailAndPassw(@RequestParam String email, String password){
-        return services.loginUser(email, password);
-    }
-
-
-
-    @DeleteMapping
-    public User deleteUser(@RequestBody User user) {
-        return services.deleteUser(user);
+    public @ResponseBody
+    Users createUser(@RequestBody Users users) {
+        return services.createUser(users);
     }
 
     @PutMapping
-    public User updateUser(@RequestBody User user) {
+    public @ResponseBody
+    Users updateUser(@RequestBody Users user) {
+
         return services.updateUser(user);
-    }*/
+    }
+    @DeleteMapping("/delete/{id}")
+    public @ResponseBody String deleteUser(@PathVariable("id") long id) {
+        return services.deleteUser(id);
+    }
+
+
 }

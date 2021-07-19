@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface IUserService {
     Users getUserById(long id);
-    List<Users> getAllUsers();
+    Iterable<Users> getAllUsers();
     Users createUser(Users users);
     Users updateUser(Users users);
-    Users deleteUser(Users users);
-    Users loginUser(String email, String password);
+    String deleteUser(long id);
+    String loginUser(String email, String password,long id);
 }

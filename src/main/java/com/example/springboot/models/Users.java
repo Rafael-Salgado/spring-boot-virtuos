@@ -3,11 +3,13 @@ package com.example.springboot.models;
 import javax.persistence.*;
 
 @Entity
+@Table(name="users")
 public class Users {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int id;
+    private long id;
     @Column
     private String user_name;
     @Column
@@ -15,14 +17,14 @@ public class Users {
     @Column
     private String user_email;
     @Column
-    private long user_phone;
+    private String user_phone;
     @Column
     private String user_password;
 
     public Users() {
     }
 
-    public Users(String firstName, String lastName, String email, long phone, String password) {
+    public Users(String firstName, String lastName, String email, String phone, String password) {
         this.user_name = firstName;
         this.user_lastname = lastName;
         this.user_email = email;
@@ -30,14 +32,14 @@ public class Users {
         this.user_password = password;
     }
 
-    public Users(int id, String firstName, String lastName, String email, long phone, String password) {
+    /*public Users(int id, String firstName, String lastName, String email, long phone, String password) {
         this.id=id;
         this.user_name = firstName;
         this.user_lastname = lastName;
         this.user_email = email;
         this.user_phone = phone;
         this.user_password = password;
-    }
+    }*/
 
     public long getId() {
         return id;
@@ -71,11 +73,11 @@ public class Users {
         this.user_email = user_email;
     }
 
-    public long getUser_phone() {
+    public String getUser_phone() {
         return user_phone;
     }
 
-    public void setUser_phone(long user_phone) {
+    public void setUser_phone(String user_phone) {
         this.user_phone = user_phone;
     }
 

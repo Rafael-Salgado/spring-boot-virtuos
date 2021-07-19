@@ -2,61 +2,61 @@ package com.example.springboot.services.impl;
 
 import com.example.springboot.models.Users;
 import com.example.springboot.services.IUserService;
+import com.example.springboot.services.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import javax.transaction.Transactional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements IUserService {
 
     // TODO: Use JPA to connect to database
-    private HashMap<Long, Users> usersMap = new HashMap<>();
+    //private HashMap<Long, Users> usersMap = new HashMap<>();
+    @Autowired
+    UserRepository userRepository;
 
-    @Override
+    @Transactional
     public Users getUserById(long id) {
-        return usersMap.get(id);
+        Optional<Users> user = userRepository.findById(id);
+        return user.get();
     }
 
-    @Override
-    public List<Users> getAllUsers() {
-        List<Users> users = new ArrayList<>();
-        for (Map.Entry<Long, Users> user : usersMap.entrySet()) {
-            users.add(user.getValue());
-        }
-        return users;
+    @Transactional
+    public Iterable<Users> getAllUsers() {
+        return userRepository.findAll();
     }
 
-    @Override
+    @Transactional
     public Users createUser(Users users) {
-        usersMap.put(users.getId(), users);
-        return usersMap.get(users.getId());
+        userRepository.save(users);
+
+        return users;
     }
 
     @Override
     public Users updateUser(Users users) {
-        usersMap.put(users.getId(), users);
+        userRepository.save(users);
         return users;
     }
 
-    @Override
-    public Users deleteUser(Users users) {
-        usersMap.remove(users.getId());
-        return users;
+    @Transactional
+    public String deleteUser(long id) {
+        userRepository.deleteById(id);
+        return "deleted";
     }
 
-    @Override
-    public Users loginUser(String email, String password) {
+    @Transactional
+    public String loginUser(String email, String password,long id) {
         Users logUsers = null;
-        for (Map.Entry<Long, Users> user : usersMap.entrySet()) {
-            Users usersTemp = user.getValue();
-            if (usersTemp.getUser_email().equals(email) && usersTemp.getUser_password().equals(password)) {
-                logUsers = usersTemp;
-                break;
-            }
+        String message = "Invalid data";
+        Optional<Users> user = userRepository.findById(id);
+
+        if(user.isPresent()){
+            if(user.get().getUser_email().equals(email)&&user.get().getUser_password().equals(password))
+                message="User Log";
         }
-        return logUsers;
+        return message;
     }
 }
