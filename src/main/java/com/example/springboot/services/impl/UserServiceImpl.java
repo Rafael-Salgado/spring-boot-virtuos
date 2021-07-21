@@ -4,12 +4,14 @@ import com.example.springboot.models.Users;
 import com.example.springboot.services.IUserService;
 import com.example.springboot.services.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.*;
 
 @Service
+@Qualifier("Users")
 public class UserServiceImpl implements IUserService {
 
     // TODO: Use JPA to connect to database
