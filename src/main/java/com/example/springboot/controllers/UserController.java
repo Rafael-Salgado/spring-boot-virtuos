@@ -41,22 +41,25 @@ public class UserController {
        return services.loginUser(email,password,id);
     }
 
-    @PostMapping
+    @PostMapping("/newUser")
     public @ResponseBody
     Users createUser(@RequestBody Users users) {
-        return services.createUser(users);
+         return services.createUser(users);
     }
 
-    @PutMapping
+    @PutMapping("/updateUser")
     public @ResponseBody
-    Users updateUser(@RequestBody Users user) {
+    Users updateUser(@RequestBody Users users) {
 
-        return services.updateUser(user);
+        return services.updateUser(users);
     }
     @DeleteMapping("/delete/{id}")
     public @ResponseBody String deleteUser(@PathVariable("id") long id) {
         return services.deleteUser(id);
     }
+
+
+
 
 
 }
