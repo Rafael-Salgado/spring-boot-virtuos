@@ -50,15 +50,14 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Transactional
-    public String loginUser(String email, String password,long id) {
+    public String loginUser(String email, String password) {
         Users logUsers = null;
         String message = "Invalid data";
-        Optional<Users> user = userRepository.findById(id);
 
-        if(user.isPresent()){
-            if(user.get().getUser_email().equals(email)&&user.get().getUser_password().equals(password))
-                message="User Log";
-        }
+        //List<Users> users = userRepository.logUser(email, password);
+       /* if (users.get(0)!=null)
+            message="User log";*/
+
         return message;
     }
 }
