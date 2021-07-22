@@ -3,6 +3,7 @@ package com.example.springboot.services.impl;
 import com.example.springboot.models.Users;
 import com.example.springboot.services.IUserService;
 import com.example.springboot.services.UserRepository;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,9 @@ import java.util.*;
 @Service
 @Qualifier("Users")
 public class UserServiceImpl implements IUserService {
+
+    private static final String SUCCESS_LOGIN = "Success login.";
+    private static final String FAIL_LOGIN = "Wrong credentials.";
 
     // TODO: Use JPA to connect to database
     //private HashMap<Long, Users> usersMap = new HashMap<>();
@@ -51,13 +55,8 @@ public class UserServiceImpl implements IUserService {
 
     @Transactional
     public String loginUser(String email, String password) {
-        Users logUsers = null;
-        String message = "Invalid data";
-
-        //List<Users> users = userRepository.logUser(email, password);
-       /* if (users.get(0)!=null)
-            message="User log";*/
-
-        return message;
+        //Why a list?
+        List<Users> users = userRepository.logUser(email, password);
+        return (users != null && users.size() > 0)?SUCCESS_LOGIN:FAIL_LOGIN;
     }
 }

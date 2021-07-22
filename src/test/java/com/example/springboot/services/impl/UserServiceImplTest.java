@@ -27,13 +27,13 @@ class UserServiceImplTest {
    public void loginUser() {
         when(userRepository.findById(1L)).thenReturn(java.util.Optional.of(new Users("karen", "maldonado", "karen@test.com", "", "123")));
 
-        assertEquals("User Log", userService.loginUser("karen@test.com","123", 1L));
+        assertEquals("User Log", userService.loginUser("karen@test.com","123"));
     }
 
     @Test
     public void failLoginUser() {
         when(userRepository.findById(1L)).thenReturn(java.util.Optional.of(new Users("karen", "maldonado", "karen@test.com", "", "123")));
 
-        assertEquals("Invalid data", userService.loginUser("karen@test.com","567", 1L));
+        assertEquals("Invalid data", userService.loginUser("karen@test.com","567"));
     }
 }

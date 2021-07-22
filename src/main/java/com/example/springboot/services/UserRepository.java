@@ -15,6 +15,6 @@ import java.util.List;
 
 @Repository("usersRepository")
 public interface UserRepository extends JpaRepository<Users, Long> {
-    @Query("select * from users u where u.user_email=:email and u.user_password=:password")
+    @Query(value = "SELECT * FROM users u where u.user_email = :email and u.user_password = :password", nativeQuery = true)
     List<Users> logUser(@Param("email") String email, @Param("password") String password);
 }
