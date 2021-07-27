@@ -54,9 +54,10 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Transactional
-    public String loginUser(String email, String password) {
+    public Users loginUser(String email, String password) {
         //Why a list?
         List<Users> users = userRepository.logUser(email, password);
-        return (users != null && users.size() > 0)?SUCCESS_LOGIN:FAIL_LOGIN;
+        //return (users != null && users.size() > 0)?SUCCESS_LOGIN:FAIL_LOGIN;
+        return users.get(0);
     }
 }

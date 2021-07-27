@@ -10,5 +10,5 @@ public interface IUserService {
     Users createUser(Users users);
     Users updateUser(Users users);
     String deleteUser(long id);
-    String loginUser(String email, String password);
+    Users loginUser(String email, String password);
 }

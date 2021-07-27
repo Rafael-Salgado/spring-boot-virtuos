@@ -38,7 +38,7 @@ public class UserController {
 
     @GetMapping("/login")
     public @ResponseBody
-    String getUserByEmailAndPassw(@RequestParam String email, String password){
+    Users getUserByEmailAndPassw(@RequestParam String email, String password){
        return services.loginUser(email,password);
     }
 
